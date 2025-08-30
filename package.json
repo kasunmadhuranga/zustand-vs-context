@@ -1,0 +1,21 @@
+{
+  "name": "state-management-comparison",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:context": "npm run dev --workspace=context-app",
+    "dev:zustand": "npm run dev --workspace=zustand-app",
+    "dev:all": "npm run dev --workspace=context-app & npm run dev --workspace=zustand-app",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}
