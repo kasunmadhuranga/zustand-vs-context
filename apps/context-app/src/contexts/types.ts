@@ -11,6 +11,7 @@ export type TodoAction =
   | { type: 'TOGGLE_TODO'; payload: string }
   | { type: 'DELETE_TODO'; payload: string }
   | { type: 'MARK_DELETING'; payload: string }
+  | { type: 'LOAD_TODOS'; payload: Todo[] }
   | { type: 'SET_FILTER'; payload: 'all' | 'active' | 'completed' };
 
 export interface TodoContextType {
@@ -19,5 +20,6 @@ export interface TodoContextType {
   toggleTodo: (id: string) => void;
   deleteTodo: (id: string) => void;
   markDeleting: (id: string) => void;
+  loadTodos: (todos: Todo[]) => void;
   setFilter: (filter: 'all' | 'active' | 'completed') => void;
 }

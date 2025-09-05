@@ -41,6 +41,11 @@ export const todoReducer = (state: TodoState, action: TodoAction): TodoState => 
         ...state,
         deletingIds: [...state.deletingIds, action.payload]
       };
+    case 'LOAD_TODOS':
+      return {
+        ...state,
+        todos: action.payload
+      };
     case 'SET_FILTER':
       return {
         ...state,

@@ -6,10 +6,13 @@ interface TodoState {
   todos: Todo[];
   filter: 'all' | 'active' | 'completed';
   deletingIds: string[];
+  loading: boolean;
   addTodo: (text: string) => void;
   toggleTodo: (id: string) => void;
   deleteTodo: (id: string) => void;
   markDeleting: (id: string) => void;
+  loadTodos: (todos: Todo[]) => void;
+  setLoading: (loading: boolean) => void;
   setFilter: (filter: 'all' | 'active' | 'completed') => void;
   getFilteredTodos: () => Todo[];
   getStats: () => { total: number; completed: number; pending: number };
@@ -22,6 +25,7 @@ export const useTodoStore = create<TodoState>()(
       todos: [],
       filter: 'all',
       deletingIds: [],
+      loading: false,
       
       addTodo: (text: string) =>
         set(
@@ -71,6 +75,10 @@ export const useTodoStore = create<TodoState>()(
         ),
       
       setFilter: (filter) => set({ filter }, false, 'setFilter'),
+      
+      loadTodos: (todos) => set({ todos }, false, 'loadTodos'),
+      
+      setLoading: (loading) => set({ loading }, false, 'setLoading'),
       
       getFilteredTodos: () => {
         const { todos, filter } = get();

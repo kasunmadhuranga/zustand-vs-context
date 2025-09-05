@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useReducer, ReactNode, useMemo } from 'react';
 import { TodoContextType } from './types';
 import { todoReducer, initialState } from './todoReducer';
+import { Todo } from '@shared/shared-components';
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
@@ -21,6 +22,9 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     },
     markDeleting: (id: string) => {
       dispatch({ type: 'MARK_DELETING', payload: id });
+    },
+    loadTodos: (todos: Todo[]) => {
+      dispatch({ type: 'LOAD_TODOS', payload: todos });
     },
     setFilter: (filter: 'all' | 'active' | 'completed') => {
       dispatch({ type: 'SET_FILTER', payload: filter });

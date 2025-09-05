@@ -1,11 +1,19 @@
 'use client';
 
-import { AddTodoForm, RenderCounter, PerformanceTest } from '@shared/shared-components';
+import { AddTodoForm, RenderCounter, PerformanceTest, useFetchTodos } from '@shared/shared-components';
 import { useTodos } from '@/contexts/TodoContext';
 import TodoList from '@/components/TodoList';
+import { useEffect } from 'react';
 
 export default function Home() {
-  const { addTodo } = useTodos();
+  const { addTodo, loadTodos } = useTodos();
+  const { todos: fetchedTodos, loading, error } = useFetchTodos();
+
+  useEffect(() => {
+    if (fetchedTodos.length > 0) {
+      loadTodos(fetchedTodos);
+    }
+  }, [fetchedTodos, loadTodos]);
 
   const handleStressTest = () => {
     for (let i = 1; i <= 10; i++) {
@@ -22,6 +30,9 @@ export default function Home() {
       
       <AddTodoForm onAdd={addTodo} />
       <PerformanceTest onStressTest={handleStressTest} />
+      
+      {loading && <div>Loading todos...</div>}
+      {error && <div>Error: {error}</div>}
       <TodoList />
       
       <div className="advantages-section context">
