@@ -161,3 +161,20 @@
   cursor: pointer;
   font-weight: bold;
 }
+
+
+.todo-item.deleting {
+  background: #ffebee;
+  border-color: #f44336;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.todo-item.deleting .delete-btn {
+  background: #f44336;
+  cursor: not-allowed;
+}
+
+.todo-item.deleting input {
+  cursor: not-allowed;
+}

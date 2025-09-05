@@ -5,7 +5,19 @@ import { TodoItem } from '@shared/shared-components';
 import { useTodos } from '@/contexts/TodoContext';
 
 const TodoList: React.FC = () => {
-  const { state, toggleTodo, deleteTodo, setFilter } = useTodos();
+  const { state, toggleTodo, deleteTodo, markDeleting, setFilter } = useTodos();
+
+  const handleDelete = (id: string) => {
+    // Mark as deleting immediately for visual feedback
+    markDeleting(id);
+    console.log(`Context: Deleting todo ${id} in 10 seconds...`);
+    
+    // Delete after 10 seconds
+    setTimeout(() => {
+      deleteTodo(id);
+      console.log(`Context: Todo ${id} deleted!`);
+    }, 10000);
+  };
   
   const filteredTodos = state.todos.filter(todo => {
     if (state.filter === 'active') return !todo.completed;
@@ -63,7 +75,8 @@ const TodoList: React.FC = () => {
             key={todo.id}
             todo={todo}
             onToggle={toggleTodo}
-            onDelete={deleteTodo}
+            onDelete={handleDelete}
+            isDeleting={state.deletingIds.includes(todo.id)}
           />
         ))}
       </div>

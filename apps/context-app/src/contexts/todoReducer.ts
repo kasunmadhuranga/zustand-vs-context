@@ -2,7 +2,8 @@ import { TodoState, TodoAction } from './types';
 
 export const initialState: TodoState = {
   todos: [],
-  filter: 'all'
+  filter: 'all',
+  deletingIds: []
 };
 
 export const todoReducer = (state: TodoState, action: TodoAction): TodoState => {
@@ -32,7 +33,13 @@ export const todoReducer = (state: TodoState, action: TodoAction): TodoState => 
     case 'DELETE_TODO':
       return {
         ...state,
-        todos: state.todos.filter(todo => todo.id !== action.payload)
+        todos: state.todos.filter(todo => todo.id !== action.payload),
+        deletingIds: state.deletingIds.filter(id => id !== action.payload)
+      };
+    case 'MARK_DELETING':
+      return {
+        ...state,
+        deletingIds: [...state.deletingIds, action.payload]
       };
     case 'SET_FILTER':
       return {

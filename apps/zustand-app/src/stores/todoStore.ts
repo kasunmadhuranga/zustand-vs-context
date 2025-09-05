@@ -5,9 +5,11 @@ import { Todo } from '@shared/shared-components';
 interface TodoState {
   todos: Todo[];
   filter: 'all' | 'active' | 'completed';
+  deletingIds: string[];
   addTodo: (text: string) => void;
   toggleTodo: (id: string) => void;
   deleteTodo: (id: string) => void;
+  markDeleting: (id: string) => void;
   setFilter: (filter: 'all' | 'active' | 'completed') => void;
   getFilteredTodos: () => Todo[];
   getStats: () => { total: number; completed: number; pending: number };
@@ -19,6 +21,7 @@ export const useTodoStore = create<TodoState>()(
     (set, get) => ({
       todos: [],
       filter: 'all',
+      deletingIds: [],
       
       addTodo: (text: string) =>
         set(
@@ -52,9 +55,19 @@ export const useTodoStore = create<TodoState>()(
         set(
           (state) => ({
             todos: state.todos.filter((todo) => todo.id !== id),
+            deletingIds: state.deletingIds.filter((deletingId) => deletingId !== id),
           }),
           false,
           'deleteTodo'
+        ),
+      
+      markDeleting: (id: string) =>
+        set(
+          (state) => ({
+            deletingIds: [...state.deletingIds, id],
+          }),
+          false,
+          'markDeleting'
         ),
       
       setFilter: (filter) => set({ filter }, false, 'setFilter'),

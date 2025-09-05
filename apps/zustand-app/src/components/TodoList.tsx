@@ -10,12 +10,26 @@ const TodoList: React.FC = () => {
     setFilter, 
     toggleTodo, 
     deleteTodo, 
+    markDeleting,
     getFilteredTodos, 
-    getStats 
+    getStats,
+    deletingIds
   } = useTodoStore();
   
   const filteredTodos = getFilteredTodos();
   const stats = getStats();
+
+  const handleDelete = (id: string) => {
+    // Mark as deleting immediately for visual feedback
+    markDeleting(id);
+    console.log(`Deleting todo ${id} in 10 seconds...`);
+    
+    // Delete after 10 seconds
+    setTimeout(() => {
+      deleteTodo(id);
+      console.log(`Todo ${id} deleted!`);
+    }, 10000);
+  };
 
   return (
     <div>
@@ -61,7 +75,8 @@ const TodoList: React.FC = () => {
             key={todo.id}
             todo={todo}
             onToggle={toggleTodo}
-            onDelete={deleteTodo}
+            onDelete={handleDelete}
+            isDeleting={deletingIds.includes(todo.id)}
           />
         ))}
       </div>

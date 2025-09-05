@@ -19,6 +19,9 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     deleteTodo: (id: string) => {
       dispatch({ type: 'DELETE_TODO', payload: id });
     },
+    markDeleting: (id: string) => {
+      dispatch({ type: 'MARK_DELETING', payload: id });
+    },
     setFilter: (filter: 'all' | 'active' | 'completed') => {
       dispatch({ type: 'SET_FILTER', payload: filter });
     }
